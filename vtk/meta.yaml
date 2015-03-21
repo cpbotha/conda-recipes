@@ -11,6 +11,9 @@ source:
   # fn: VTK-5.10.1.win32-py2.7.exe             [win32 and py27]
   # fn: VTK-5.10.1.win-amd64-py2.7.exe         [win64 and py27]
 
+  patches:
+    - vtkerr_pyexcept.patch
+
 build:
   number: 1                                  [linux]
 
