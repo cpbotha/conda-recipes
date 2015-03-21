@@ -1,14 +1,4 @@
-import vtk.vtkChartsPython
-import vtk.vtkCommonPython
-import vtk.vtkFilteringPython
-import vtk.vtkGenericFilteringPython
-import vtk.vtkGeovisPython
-import vtk.vtkGraphicsPython
-import vtk.vtkHybridPython
-import vtk.vtkIOPython
-import vtk.vtkImagingPython
-import vtk.vtkInfovisPython
-import vtk.vtkRenderingPython
-import vtk.vtkViewsPython
-import vtk.vtkVolumeRenderingPython
-import vtk.vtkWidgetsPython
+# this imports all of the modules belonging to Python
+import vtk
+# mkae sure that it's the right version!
+assert(vtk.vtkVersion().GetVTKVersion() == '6.2.0')

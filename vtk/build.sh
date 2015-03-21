@@ -16,6 +16,9 @@ fi
 
 mkdir build
 cd build
+
+# deactivated OFFSCREEN and activated X instead
+# also switching to the new programmable pipeline OpenGL2 renderer
 $CMAKE \
     -DCMAKE_INSTALL_PREFIX:PATH="$PREFIX" \
     -DCMAKE_INSTALL_RPATH:STRING="$PREFIX/lib" \
@@ -28,17 +31,23 @@ $CMAKE \
     -DPYTHON_LIBRARY:FILEPATH=$PREFIX/lib/$PY_LIB \
     -DVTK_USE_X:BOOL=OFF \
     -DVTK_WRAP_PYTHON:BOOL=ON \
-    -DVTK_USE_OFFSCREEN:BOOL=ON \
+    -DVTK_RENDERING_BACKEND:STRING="OpenGL2" \
+    -DVTK_USE_OFFSCREEN:BOOL=OFF \
+    -DVTK_USE_X:BOOL=ON \
     ..
 
-make
+# make the build use 8 concurrent processes
+make -j8
 make install
 
-if [ `uname` == Linux ]; then
-    mv $PREFIX/lib/vtk-5.10/lib* $PREFIX/lib
-    $REPLACE '/lib/vtk-5.10/lib' '/lib/lib' \
-	     $PREFIX/lib/vtk-5.10/VTKTargets-debug.cmake
-fi
+# with 6.2.0, these libs already end up in $PREFIX/lib/
+# on my setup, that's anaconda/envs/_build/lib/
+# if [ `uname` == Linux ]; then
+#     mv $PREFIX/lib/VTK-6.2.0/lib* $PREFIX/lib
+#     $REPLACE '/lib/VTK-6.2.0/lib' '/lib/lib' \
+# 	     $PREFIX/lib/VTK-6.2.0/VTKTargets-debug.cmake
+# fi
+
 if [ `uname` == Darwin ]; then
     $SYS_PYTHON $RECIPE_DIR/osx.py
 fi
